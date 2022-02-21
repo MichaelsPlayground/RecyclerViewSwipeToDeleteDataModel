@@ -2,8 +2,6 @@ package de.androidcrypto.recyclerviewswipetodelete;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -19,6 +17,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     // source: https://github.com/journaldev/journaldev/tree/master/Android/AndroidRecyclerViewSwipeToDelete
     // https://www.journaldev.com/23164/android-recyclerview-swipe-to-delete-undo
+    // funktioniert
     RecyclerView recyclerView;
     RecyclerViewAdapter mAdapter;
     ArrayList<String> stringArrayList = new ArrayList<>();
@@ -34,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         populateRecyclerView();
         enableSwipeToDeleteAndUndo();
-
-
     }
 
     private void populateRecyclerView() {
@@ -52,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter = new RecyclerViewAdapter(stringArrayList);
         recyclerView.setAdapter(mAdapter);
-
-
     }
 
     private void enableSwipeToDeleteAndUndo() {
@@ -62,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
 
-                final int position = viewHolder.getAdapterPosition();
+                //final int position = viewHolder.getAdapterPosition(); // getAdapterPosition is deprecated
+                final int position = viewHolder.getBindingAdapterPosition();
                 final String item = mAdapter.getData().get(position);
 
                 mAdapter.removeItem(position);
-
 
                 Snackbar snackbar = Snackbar
                         .make(coordinatorLayout, "Item was removed from the list.", Snackbar.LENGTH_LONG);
@@ -81,13 +76,10 @@ public class MainActivity extends AppCompatActivity {
 
                 snackbar.setActionTextColor(Color.YELLOW);
                 snackbar.show();
-
             }
         };
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(recyclerView);
     }
-
-
 }

@@ -35,10 +35,7 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
         deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.ic_delete);
         intrinsicWidth = deleteDrawable.getIntrinsicWidth();
         intrinsicHeight = deleteDrawable.getIntrinsicHeight();
-
-
     }
-
 
     @Override
     public int getMovementFlags(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
@@ -75,22 +72,19 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
         int deleteIconRight = itemView.getRight() - deleteIconMargin;
         int deleteIconBottom = deleteIconTop + intrinsicHeight;
 
-
         deleteDrawable.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom);
         deleteDrawable.draw(c);
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-
-
     }
 
     private void clearCanvas(Canvas c, Float left, Float top, Float right, Float bottom) {
         c.drawRect(left, top, right, bottom, mClearPaint);
-
     }
 
     @Override
     public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+        // 0.7f means 70% to swipe, then it executes
         return 0.7f;
     }
 }
