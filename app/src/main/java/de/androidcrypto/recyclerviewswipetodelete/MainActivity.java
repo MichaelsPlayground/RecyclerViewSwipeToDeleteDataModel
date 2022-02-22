@@ -20,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
     // funktioniert
     RecyclerView recyclerView;
     RecyclerViewAdapter mAdapter;
-    ArrayList<String> stringArrayList = new ArrayList<>();
+    //ArrayList<String> stringArrayList = new ArrayList<>();
     CoordinatorLayout coordinatorLayout;
+    ArrayList<StockModel> stockModelArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateRecyclerView() {
+/*
         stringArrayList.add("Item 1");
         stringArrayList.add("Item 2");
         stringArrayList.add("Item 3");
@@ -45,9 +47,19 @@ public class MainActivity extends AppCompatActivity {
         stringArrayList.add("Item 7");
         stringArrayList.add("Item 8");
         stringArrayList.add("Item 9");
-        stringArrayList.add("Item 10");
+        stringArrayList.add("Item 10");*/
 
-        mAdapter = new RecyclerViewAdapter(stringArrayList);
+        StockModel stockModel = new StockModel("IE123", "ETF Europe", true, "");
+        stockModelArrayList.add(stockModel);
+        stockModel = new StockModel("IE345", "ETF World", true, "");
+        stockModelArrayList.add(stockModel);
+        stockModel = new StockModel("LU111222333", "ETF Emerging Markets", true, "");
+        stockModelArrayList.add(stockModel);
+
+        //mAdapter = new RecyclerViewAdapter(stringArrayList);
+        //recyclerView.setAdapter(mAdapter);
+
+        mAdapter = new RecyclerViewAdapter(stockModelArrayList);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -59,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
                 //final int position = viewHolder.getAdapterPosition(); // getAdapterPosition is deprecated
                 final int position = viewHolder.getBindingAdapterPosition();
-                final String item = mAdapter.getData().get(position);
+                final StockModel item = mAdapter.getData().get(position);
+                //final String item = mAdapter.getData().get(position);
 
                 mAdapter.removeItem(position);
 
@@ -68,18 +81,32 @@ public class MainActivity extends AppCompatActivity {
                 snackbar.setAction("UNDO", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         mAdapter.restoreItem(item, position);
                         recyclerView.scrollToPosition(position);
+                        System.out.println("actual contents of the arraylist");
+                        System.out.println("stockModelArrayList size: " + stockModelArrayList.size());
+                        printStockModelArrayList(stockModelArrayList);
                     }
                 });
 
                 snackbar.setActionTextColor(Color.YELLOW);
                 snackbar.show();
+
+                System.out.println("actual contents of the arraylist");
+                System.out.println("stockModelArrayList size: " + stockModelArrayList.size());
+                printStockModelArrayList(stockModelArrayList);
             }
         };
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(recyclerView);
+    }
+
+    private void printStockModelArrayList(ArrayList<StockModel> list) {
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            System.out.println("nr " + i + " isin: " + list.get(i).getIsin() +
+                    " isinName: " + list.get(i).getIsinName());
+        }
     }
 }
