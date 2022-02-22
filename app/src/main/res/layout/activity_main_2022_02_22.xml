@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -16,15 +18,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@drawable/ic_baseline_add_24"
-            android:contentDescription="add"
-            android:layout_margin="16dp" />
 
-
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
